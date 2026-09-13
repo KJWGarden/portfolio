@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
   --background: #08090c;
   --foreground: #f4f0e6;
   --muted: #9a9588;
@@ -9,6 +10,20 @@
   --card: #101218;
   --border: rgba(244, 240, 230, 0.08);
   --glow: rgba(125, 255, 179, 0.18);
+  --nav: rgba(0, 0, 0, 0.6);
+}
+
+html.light {
+  color-scheme: light;
+  --background: #f4f0e6;
+  --foreground: #16181d;
+  --muted: #6f6b62;
+  --accent: #0d8a56;
+  --accent-soft: rgba(13, 138, 86, 0.1);
+  --card: #fffdf8;
+  --border: rgba(22, 24, 29, 0.1);
+  --glow: rgba(13, 138, 86, 0.14);
+  --nav: rgba(255, 253, 248, 0.78);
 }
 
 @theme inline {
@@ -19,6 +34,7 @@
   --color-accent-soft: var(--accent-soft);
   --color-card: var(--card);
   --color-border: var(--border);
+  --color-nav: var(--nav);
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
@@ -38,10 +54,20 @@ body {
   color: #08110c;
 }
 
+html.light ::selection {
+  color: #f4f0e6;
+}
+
 .hero-glow {
   background:
     radial-gradient(ellipse 80% 55% at 50% 0%, rgba(125, 255, 179, 0.16), transparent 55%),
     radial-gradient(ellipse 50% 40% at 80% 20%, rgba(80, 140, 255, 0.08), transparent 50%);
+}
+
+html.light .hero-glow {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, rgba(13, 138, 86, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(80, 140, 255, 0.06), transparent 50%);
 }
 
 .section-label {

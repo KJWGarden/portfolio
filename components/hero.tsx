@@ -26,14 +26,14 @@ export function Hero() {
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="rounded-full border border-white/12 px-5 py-2.5 text-foreground transition-colors hover:border-white/30"
+              className="rounded-full border border-border px-5 py-2.5 text-foreground transition-colors hover:border-foreground/30"
             >
               이메일 보내기
             </a>
           </div>
         </div>
         <div className="mx-auto shrink-0 md:mx-0">
-          <div className="relative size-56 overflow-hidden rounded-full border border-white/10 bg-card shadow-[0_0_80px_var(--glow)] md:size-72">
+          <div className="relative size-56 overflow-hidden rounded-full border border-border bg-card shadow-[0_0_80px_var(--glow)] md:size-72">
             <Image
               src="/images/profile.jpg"
               alt={`${profile.name} 프로필 사진`}

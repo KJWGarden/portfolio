@@ -8,7 +8,7 @@ export function ProjectExpand({ project }: { project: Project }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-t border-white/6">
+    <div className="border-t border-border">
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}

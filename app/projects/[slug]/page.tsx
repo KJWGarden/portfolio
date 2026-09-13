@@ -54,7 +54,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
         {project.gallery[0] ? (
           <div
-            className={`relative mt-12 overflow-hidden rounded-3xl border border-white/8 ${
+            className={`relative mt-12 overflow-hidden rounded-3xl border border-border ${
               project.coverFit === "contain"
                 ? "flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_50%_40%,#9ae8e0_0%,#6ec8d4_55%,#3aa8c4_100%)]"
                 : "aspect-[16/10] bg-card"
@@ -97,7 +97,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <h2 className="mt-8 text-sm font-medium text-muted">기술</h2>
             <ul className="mt-4 flex flex-wrap gap-2">
               {project.stack.map((tech) => (
-                <li key={tech} className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted">
+                <li key={tech} className="rounded-full bg-foreground/5 px-3 py-1 text-xs text-muted">
                   {tech}
                 </li>
               ))}
@@ -110,7 +110,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <h2 className="text-xl font-semibold">주요 기능</h2>
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               {project.features.map((group) => (
-                <div key={group.title} className="rounded-3xl border border-white/8 bg-card p-6 md:p-7">
+                <div key={group.title} className="rounded-3xl border border-border bg-card p-6 md:p-7">
                   <h3 className="text-base font-semibold">{group.title}</h3>
                   <ul className="mt-4 space-y-3 text-sm leading-7 text-muted">
                     {group.items.map((item) => (
@@ -130,10 +130,10 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <h2 className="text-xl font-semibold">문제와 개선</h2>
             <div className="mt-8 space-y-6">
               {project.highlights.map((highlight) => (
-                <div key={highlight.title} className="rounded-3xl border border-white/8 bg-card p-6 md:p-8">
+                <div key={highlight.title} className="rounded-3xl border border-border bg-card p-6 md:p-8">
                   <h3 className="text-lg font-semibold">{highlight.title}</h3>
                   <div className="mt-6 grid gap-5 md:grid-cols-2">
-                    <div className="rounded-2xl bg-white/3 p-5">
+                    <div className="rounded-2xl bg-foreground/[0.03] p-5">
                       <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted">AS-IS</p>
                       <p className="mt-3 text-sm leading-7 text-muted">{highlight.asIs}</p>
                     </div>
@@ -153,7 +153,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <h2 className="text-xl font-semibold">설계에서 남긴 판단</h2>
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               {project.talkingPoints.map((point) => (
-                <div key={point.title} className="rounded-3xl border border-white/8 bg-card p-6 md:p-7">
+                <div key={point.title} className="rounded-3xl border border-border bg-card p-6 md:p-7">
                   <h3 className="text-base font-semibold">{point.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-muted">{point.description}</p>
                 </div>
@@ -167,7 +167,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <h2 className="text-xl font-semibold">화면</h2>
             <div className="mt-8 grid gap-5">
               {project.gallery.slice(1).map((image) => (
-                <div key={image.src} className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-white/8 bg-card">
+                <div key={image.src} className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-border bg-card">
                   <Image src={image.src} alt={image.alt} fill className="object-cover" sizes="(min-width: 1152px) 1152px, 100vw" />
                 </div>
               ))}
@@ -176,7 +176,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         ) : null}
 
         {project.retrospective ? (
-          <section className="mt-20 rounded-3xl border border-white/8 bg-card p-7 md:p-10">
+          <section className="mt-20 rounded-3xl border border-border bg-card p-7 md:p-10">
             <h2 className="text-xl font-semibold">회고</h2>
             <p className="mt-4 text-base leading-8 text-muted">{project.retrospective}</p>
           </section>

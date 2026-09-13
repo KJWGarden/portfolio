@@ -2,7 +2,7 @@ import { profile } from "@/lib/data";
 
 export function Contact() {
   return (
-    <section className="border-t border-white/6">
+    <section className="border-t border-border">
       <div className="mx-auto w-full max-w-6xl px-5 py-24 text-center md:px-8 md:py-32">
         <p className="section-label mb-4 text-xs font-medium uppercase text-accent">Contact</p>
         <h2 className="text-3xl font-semibold tracking-tight md:text-5xl">
