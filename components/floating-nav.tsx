@@ -42,16 +42,16 @@ export function FloatingNav() {
   return (
     <nav
       aria-label="섹션 내비게이션"
-      className="fixed bottom-5 left-1/2 z-40 -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-2 py-2 shadow-lg shadow-black/40 backdrop-blur-xl"
+      className="fixed bottom-5 left-1/2 z-40 w-fit max-w-[calc(100vw-1.5rem)] -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-1.5 py-1.5 shadow-lg shadow-black/40 backdrop-blur-xl sm:px-2 sm:py-2"
     >
-      <ul className="flex items-center gap-1">
+      <ul className="flex flex-nowrap items-center justify-center gap-0.5 sm:gap-1">
         {navItems.map((item) => {
           const isActive = active === item.href;
           return (
-            <li key={item.href}>
+            <li key={item.href} className="shrink-0">
               <Link
                 href={item.href}
-                className={`rounded-full px-4 py-2 text-sm transition-colors ${
+                className={`block whitespace-nowrap rounded-full px-2.5 py-2 text-xs leading-none [word-break:keep-all] transition-colors sm:px-4 sm:text-sm ${
                   isActive ? "bg-white/10 text-foreground" : "text-muted hover:text-foreground"
                 }`}
               >
