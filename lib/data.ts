@@ -90,7 +90,7 @@ export const projects: Project[] = [
     summary:
       "커뮤니티·기도·QT·소그룹·채플 출석·제자훈련·실시간 통번역까지 사역 전반을 하나의 앱으로 묶은 iOS/Android 서비스. 기획부터 DB, Edge Function, 배포·운영까지 1인 풀스택으로 10개월간 운영하고 있습니다.",
     overview:
-      "대학 선교단체 부산CCC의 공식 커뮤니티 앱입니다. 게시판과 스토리 같은 소셜 기능뿐 아니라 기도·QT·영적 일기, GPS 채플 출석, 제자훈련 콘텐츠, 수련회 외국인 참가자용 실시간 통번역까지 사역 흐름을 한 앱에 모았습니다. React Native(Expo) 앱과 Supabase(Postgres·Auth·RLS·RPC·pg_cron), Deno Edge Functions를 직접 설계·운영하며 Android/iOS 합산 다운로드 약 230건, MAU 115명 규모로 서비스를 키우고 있습니다.",
+      "대학 선교단체 부산CCC의 공식 커뮤니티 앱입니다. 게시판과 스토리 같은 소셜 기능뿐 아니라 기도·QT·영적 일기, GPS 채플 출석, 제자훈련 콘텐츠, 수련회 외국인 참가자용 실시간 통번역까지 사역 흐름을 한 앱에 모았습니다. React Native(Expo) 앱과 Supabase(Postgres·Auth·RLS·RPC·pg_cron), Deno Edge Functions를 직접 설계·운영하며 유저 400+, MAU 200+, DAU 40+ 규모로 서비스를 키우고 있습니다.",
     roles: [
       "1인 풀스택 개발 — 기획 · 앱 · DB 스키마 · Edge Function · 배포/운영",
       "React Native 0.81 · Expo 54(New Architecture, React Compiler) 앱 설계",
@@ -288,7 +288,7 @@ export const projects: Project[] = [
     retrospective:
       "AI 모델 자체보다 데이터 품질과 검색 구조가 서비스의 신뢰성을 결정한다는 점을 깊이 체감했습니다. 단순히 LLM을 연동하는 것만으로는 원하는 답변을 주기 어려웠기 때문에, 자료를 직접 정리하고 Knowledge Base와 RAG를 설계했습니다. 앞으로는 Reranking, Hybrid Search, 장기 메모리 등을 적용해 더 정확한 AI Assistant로 발전시킬 계획입니다.",
     stack: ["Next.js", "TypeScript", "Dify", "TanStack Query", "Zustand", "Tailwind CSS"],
-    site: "https://forest-ai-tau.vercel.app",
+    site: "https://ai.busanccc.com",
     cover: "/images/ccc-ai.png",
     icon: "/images/ccc-ai-mascot.png",
     gallery: [
