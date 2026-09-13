@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
         <header className="mt-8 max-w-3xl">
           <p className="text-sm text-accent">
-            {project.status ? `${project.period} · ${project.status}` : project.period}
+            {[project.period, project.status].filter(Boolean).join(" · ")}
           </p>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">{project.title}</h1>
           <p className="mt-3 text-lg text-muted">{project.subtitle}</p>
@@ -82,143 +82,85 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           </div>
         ) : null}
 
-        {project.planningPoints ? (
-          <>
-            <section className="mt-16">
-              <h2 className="text-xl font-semibold">프로젝트 설명</h2>
-              <p className="mt-4 max-w-3xl text-base leading-8 text-muted">{project.overview}</p>
-              {project.facts ? (
-                <ul className="mt-8 space-y-2 text-sm leading-7 text-foreground/85">
-                  {project.facts.map((fact) => (
-                    <li key={fact}>{fact}</li>
-                  ))}
-                </ul>
-              ) : null}
-            </section>
+        <section className="mt-16 grid gap-10 md:grid-cols-[1fr_220px]">
+          <div>
+            <h2 className="text-xl font-semibold">개요</h2>
+            <p className="mt-4 text-base leading-8 text-muted">{project.overview}</p>
+          </div>
+          <aside>
+            <h2 className="text-sm font-medium text-muted">역할</h2>
+            <ul className="mt-4 space-y-3 text-sm leading-6 text-foreground/85">
+              {project.roles.map((role) => (
+                <li key={role}>{role}</li>
+              ))}
+            </ul>
+            <h2 className="mt-8 text-sm font-medium text-muted">기술</h2>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {project.stack.map((tech) => (
+                <li key={tech} className="rounded-full bg-foreground/5 px-3 py-1 text-xs text-muted">
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </section>
 
-            {project.stackGroups ? (
-              <section className="mt-20">
-                <h2 className="text-xl font-semibold">기술 스택</h2>
-                <dl className="mt-8 space-y-4">
-                  {project.stackGroups.map((group) => (
-                    <div key={group.label} className="grid gap-1 sm:grid-cols-[88px_1fr] sm:gap-6">
-                      <dt className="text-sm text-muted">{group.label}</dt>
-                      <dd className="text-sm leading-7">{group.items}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
-            ) : null}
-
-            <section className="mt-20">
-              <h2 className="text-xl font-semibold">기획 포인트</h2>
-              <ul className="mt-8 space-y-6">
-                {project.planningPoints.map((point) => (
-                  <li key={point.title}>
-                    <h3 className="text-base font-semibold">{point.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-muted">{point.description}</p>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            {project.challenges ? (
-              <section className="mt-20">
-                <h2 className="text-xl font-semibold">해결 과제</h2>
-                <ul className="mt-8 space-y-6">
-                  {project.challenges.map((point) => (
-                    <li key={point.title}>
-                      <h3 className="text-base font-semibold">{point.title}</h3>
-                      <p className="mt-2 text-sm leading-7 text-muted">{point.description}</p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
-          </>
-        ) : (
-          <>
-            <section className="mt-16 grid gap-10 md:grid-cols-[1fr_220px]">
-              <div>
-                <h2 className="text-xl font-semibold">개요</h2>
-                <p className="mt-4 text-base leading-8 text-muted">{project.overview}</p>
-              </div>
-              <aside>
-                <h2 className="text-sm font-medium text-muted">역할</h2>
-                <ul className="mt-4 space-y-3 text-sm leading-6 text-foreground/85">
-                  {project.roles.map((role) => (
-                    <li key={role}>{role}</li>
-                  ))}
-                </ul>
-                <h2 className="mt-8 text-sm font-medium text-muted">기술</h2>
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {project.stack.map((tech) => (
-                    <li key={tech} className="rounded-full bg-foreground/5 px-3 py-1 text-xs text-muted">
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-            </section>
-
-            {project.features && project.features.length > 0 ? (
-              <section className="mt-20">
-                <h2 className="text-xl font-semibold">주요 기능</h2>
-                <div className="mt-8 grid gap-5 md:grid-cols-2">
-                  {project.features.map((group) => (
-                    <div key={group.title} className="rounded-3xl border border-border bg-card p-6 md:p-7">
-                      <h3 className="text-base font-semibold">{group.title}</h3>
-                      <ul className="mt-4 space-y-3 text-sm leading-7 text-muted">
-                        {group.items.map((item) => (
-                          <li key={item} className="pl-4 before:mr-3 before:text-accent before:content-['–']">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+        {project.features && project.features.length > 0 ? (
+          <section className="mt-20">
+            <h2 className="text-xl font-semibold">주요 기능</h2>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {project.features.map((group) => (
+                <div key={group.title} className="rounded-3xl border border-border bg-card p-6 md:p-7">
+                  <h3 className="text-base font-semibold">{group.title}</h3>
+                  <ul className="mt-4 space-y-3 text-sm leading-7 text-muted">
+                    {group.items.map((item) => (
+                      <li key={item} className="pl-4 before:mr-3 before:text-accent before:content-['–']">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </section>
-            ) : null}
+              ))}
+            </div>
+          </section>
+        ) : null}
 
-            {project.highlights && project.highlights.length > 0 ? (
-              <section className="mt-20">
-                <h2 className="text-xl font-semibold">문제와 개선</h2>
-                <div className="mt-8 space-y-6">
-                  {project.highlights.map((highlight) => (
-                    <div key={highlight.title} className="rounded-3xl border border-border bg-card p-6 md:p-8">
-                      <h3 className="text-lg font-semibold">{highlight.title}</h3>
-                      <div className="mt-6 grid gap-5 md:grid-cols-2">
-                        <div className="rounded-2xl bg-foreground/[0.03] p-5">
-                          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted">AS-IS</p>
-                          <p className="mt-3 text-sm leading-7 text-muted">{highlight.asIs}</p>
-                        </div>
-                        <div className="rounded-2xl bg-accent-soft p-5">
-                          <p className="text-xs font-medium uppercase tracking-[0.16em] text-accent">TO-BE</p>
-                          <p className="mt-3 text-sm leading-7 text-foreground/90">{highlight.toBe}</p>
-                        </div>
-                      </div>
+        {project.highlights.length > 0 ? (
+          <section className="mt-20">
+            <h2 className="text-xl font-semibold">문제와 개선</h2>
+            <div className="mt-8 space-y-6">
+              {project.highlights.map((highlight) => (
+                <div key={highlight.title} className="rounded-3xl border border-border bg-card p-6 md:p-8">
+                  <h3 className="text-lg font-semibold">{highlight.title}</h3>
+                  <div className="mt-6 grid gap-5 md:grid-cols-2">
+                    <div className="rounded-2xl bg-foreground/[0.03] p-5">
+                      <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted">AS-IS</p>
+                      <p className="mt-3 text-sm leading-7 text-muted">{highlight.asIs}</p>
                     </div>
-                  ))}
+                    <div className="rounded-2xl bg-accent-soft p-5">
+                      <p className="text-xs font-medium uppercase tracking-[0.16em] text-accent">TO-BE</p>
+                      <p className="mt-3 text-sm leading-7 text-foreground/90">{highlight.toBe}</p>
+                    </div>
+                  </div>
                 </div>
-              </section>
-            ) : null}
+              ))}
+            </div>
+          </section>
+        ) : null}
 
-            {project.talkingPoints && project.talkingPoints.length > 0 ? (
-              <section className="mt-20">
-                <h2 className="text-xl font-semibold">설계에서 남긴 판단</h2>
-                <div className="mt-8 grid gap-5 md:grid-cols-2">
-                  {project.talkingPoints.map((point) => (
-                    <div key={point.title} className="rounded-3xl border border-border bg-card p-6 md:p-7">
-                      <h3 className="text-base font-semibold">{point.title}</h3>
-                      <p className="mt-3 text-sm leading-7 text-muted">{point.description}</p>
-                    </div>
-                  ))}
+        {project.talkingPoints && project.talkingPoints.length > 0 ? (
+          <section className="mt-20">
+            <h2 className="text-xl font-semibold">설계에서 남긴 판단</h2>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {project.talkingPoints.map((point) => (
+                <div key={point.title} className="rounded-3xl border border-border bg-card p-6 md:p-7">
+                  <h3 className="text-base font-semibold">{point.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-muted">{point.description}</p>
                 </div>
-              </section>
-            ) : null}
-          </>
-        )}
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {project.gallery.length > 1 ? (
           <section className="mt-20">
