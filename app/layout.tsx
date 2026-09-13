@@ -3,10 +3,9 @@ import { Header } from "@/components/header";
 import { FloatingNav } from "@/components/floating-nav";
 import { Footer } from "@/components/footer";
 import { profile } from "@/lib/data";
+import { siteUrl } from "@/lib/site";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -18,8 +17,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${profile.name} | ${profile.title}`,
     description: profile.headline,
+    url: siteUrl,
     locale: "ko_KR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} | ${profile.title}`,
+    description: profile.headline,
   },
 };
 
