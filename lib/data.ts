@@ -14,19 +14,28 @@ export type TalkingPoint = {
   description: string;
 };
 
+export type StackGroup = {
+  label: string;
+  items: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
   subtitle: string;
   period: string;
-  status: string;
+  status?: string;
   summary: string;
   overview: string;
   roles: string[];
-  highlights: ProjectHighlight[];
+  facts?: string[];
+  stackGroups?: StackGroup[];
+  planningPoints?: TalkingPoint[];
+  challenges?: TalkingPoint[];
+  highlights?: ProjectHighlight[];
   features?: FeatureGroup[];
   talkingPoints?: TalkingPoint[];
-  retrospective: string;
+  retrospective?: string;
   stack: string[];
   site?: string;
   stores?: {
@@ -84,102 +93,75 @@ export const projects: Project[] = [
   {
     slug: "busanccc",
     title: "CCC 커뮤니티",
-    subtitle: "부산CCC 공식 커뮤니티 앱",
+    subtitle: "부산CCC 앱",
     period: "2025.11 — 현재",
-    status: "운영 중 · v1.5.2",
     summary:
-      "커뮤니티·기도·QT·소그룹·채플 출석·제자훈련·실시간 통번역까지 사역 전반을 하나의 앱으로 묶은 iOS/Android 서비스. 기획부터 DB, Edge Function, 배포·운영까지 1인 풀스택으로 10개월간 운영하고 있습니다.",
+      "QT·영성일기·기도·순모임·채플 참여를 하나의 앱으로 묶고, 활동을 XP·레벨·업적으로 시각화해 영적 습관을 지속하게 만드는 서비스.",
     overview:
-      "대학 선교단체 부산CCC의 공식 커뮤니티 앱입니다. 게시판과 스토리 같은 소셜 기능뿐 아니라 기도·QT·영적 일기, GPS 채플 출석, 제자훈련 콘텐츠, 수련회 외국인 참가자용 실시간 통번역까지 사역 흐름을 한 앱에 모았습니다. React Native(Expo) 앱과 Supabase(Postgres·Auth·RLS·RPC·pg_cron), Deno Edge Functions를 직접 설계·운영하며 유저 400+, MAU 200+, DAU 40+ 규모로 서비스를 키우고 있습니다.",
-    roles: [
-      "1인 풀스택 개발 — 기획 · 앱 · DB 스키마 · Edge Function · 배포/운영",
-      "React Native 0.81 · Expo 54(New Architecture, React Compiler) 앱 설계",
-      "Supabase RLS/RPC/pg_cron과 푸시·출석·통번역 파이프라인 구축",
-      "EAS Build 채널과 fingerprint 기반 OTA 운영 정책 수립",
+      "대학 선교단체 부산CCC의 공식 iOS/Android 앱. QT·영성일기·기도·순모임·채플 참여를 하나의 앱으로 묶고, 활동을 XP·레벨·업적으로 시각화해 영적 습관을 지속하게 만드는 서비스.",
+    roles: ["1인 개발 — 기획 · 앱 · DB · 서버리스 함수 · 배포/운영"],
+    facts: [
+      "2025.11 ~ 현재",
+      "1인 개발 — 기획 · 앱 · DB · 서버리스 함수 · 배포/운영",
+      "TS 381파일 · 84K줄 · 화면 57개 · 커밋 250+",
+      "유저 400+ · MAU 200+ · DAU 40+",
     ],
-    highlights: [
-      {
-        title: "OTA 사고 방지 설계",
-        asIs: "네이티브 변경이 섞인 JS 번들을 구버전 빌드에 OTA로 내보내면 런타임이 깨질 수 있습니다. 스토어 심사 없이 핫픽스를 보내는 환경일수록 이 위험이 커집니다.",
-        toBe: "runtimeVersion을 fingerprint 정책으로 두어 네이티브에 영향을 주는 변경이 생기면 런타임 버전을 자동으로 올립니다. JS만 바뀐 수정은 EAS Update로 배포하고, 네이티브가 바뀌면 새 빌드를 올리도록 사고 경로를 구조적으로 차단했습니다.",
-      },
-      {
-        title: "푸시 신뢰성의 닫힌 루프",
-        asIs: "푸시를 보내기만 하면 실패 토큰과 유실을 추적하기 어렵습니다. 알림이 안 갔는지, 토큰이 죽었는지 구분이 안 됩니다.",
-        toBe: "DB 트리거 → Edge Function → Expo Push API로 발송한 뒤 티켓 ID를 저장하고, 5분 후 receipts API를 배치 조회해 실패 토큰을 정리합니다. 소그룹 공지·수련회/채플 출석 등 목적별 Edge Function을 분리해 유실을 추적할 수 있게 했습니다.",
-      },
-      {
-        title: "보안 로직의 단일 소스",
-        asIs: "통번역 비공개 세션 비밀번호를 앱과 관리자 웹에서 각각 해시해 검증 방식이 어긋났고, 로그인이 실패하는 버그가 났습니다.",
-        toBe: "해시 생성·검증을 Postgres 함수(SECURITY DEFINER, pgcrypto bcrypt)로 일원화했습니다. 시도 제한(10분 8회)도 DB에서 처리해 클라이언트 간 불일치를 원천 제거했습니다.",
-      },
-      {
-        title: "RLS 중심 권한 설계",
-        asIs: "프로필·일기·소그룹 데이터를 앱 단에서만 가리면 클라이언트를 우회했을 때 접근 제어가 무너집니다.",
-        toBe: "같은 그룹 멤버만 프로필을 볼 수 있는 정책, 일기 공유 범위 등을 Postgres RLS로 처리했습니다. 멤버 수 집계도 트리거로 유지해 권한과 집계의 기준을 DB에 두었습니다.",
-      },
+    stackGroups: [
+      { label: "앱", items: "React Native · Expo · TypeScript" },
+      { label: "상태", items: "Zustand · TanStack Query" },
+      { label: "UI", items: "NativeWind · GlueStack UI · Reanimated" },
+      { label: "백엔드", items: "Supabase (Postgres · Auth · Storage · RLS · Edge Functions)" },
+      { label: "배포", items: "EAS Build · EAS Update · Expo Push" },
     ],
-    features: [
+    planningPoints: [
       {
-        title: "커뮤니티 & 소셜",
-        items: [
-          "게시글/댓글/좋아요, 익명 게시, 지역(district)·리더십 게시판, 24시간 이미지 스토리",
-          "PostRepository 인터페이스 → Supabase 구현체 → Factory로 데이터 접근을 추상화",
-        ],
-      },
-      {
-        title: "영성 콘텐츠",
-        items: [
-          "기도제목 나눔, 매일 QT 묵상과 그룹 공유/반응, 오늘의 말씀(500구절), 영적 일기, 주간 주보",
-          "채플 설교 요약: 관리자 웹에서 Claude structured outputs로 초안 생성 → 앱에서 영상 상단 고정, 타임스탬프 탭 시 해당 지점 재생",
-        ],
-      },
-      {
-        title: "채플 출석 & 리더보드",
-        items: [
-          "GPS 출석 — Haversine 거리, 장소별 반경(기본 150m) 검증, 출석 순간에만 위치 사용",
-          "pg_cron이 Edge Function을 5분마다 호출해 채플 시작 1시간 전 자동 푸시",
-          "학기별 MVP 리더보드·보상, 수련회 출석/리더보드",
-        ],
-      },
-      {
-        title: "실시간 통번역",
-        items: [
-          "외부 통번역 서버와 WebSocket 직접 연결, 전사문·번역문·TTS 오디오 스트리밍",
-          "언어 전환 시 히스토리 재동기화, sinceSeq 기반 재접속 백필, 지수 백오프 + 지터 재연결",
-          "프로토콜 명세 문서화와 로컬 mock 서버 스크립트 작성",
-        ],
-      },
-      {
-        title: "제자훈련 · 게임화 · 소그룹",
-        items: [
-          "트랙 → 코스 → 강의 → 섹션 → 블록 계층. 보충설명은 기본 접힘, 예화는 카드, 성경구절은 칩+바텀시트",
-          "활동별 XP와 일일 제한, 레벨·배지, 업적 신청 후 관리자 승인(거절 사유 포함)",
-          "그룹 생성/활동, 공유 비율 기반 트렌딩, 같은 그룹만 프로필 조회 가능한 RLS",
-        ],
-      },
-      {
-        title: "운영",
-        items: [
-          "개발자 모드, 앱 버전 강제 업데이트, 계정 삭제·알림 설정 RPC, 라이트/다크 테마",
-          "알림 유형별 딥링크(route:id) 라우팅, EAS Build(dev/preview/production)와 OTA",
-        ],
-      },
-    ],
-    talkingPoints: [
-      {
-        title: "콘텐츠 UX를 원문 문법에서 설계",
+        title: "영성 습관 루프",
         description:
-          "제자훈련 원문의 명제/보충/예화/구절 문법을 분석해 저피로 읽기 UI로 바꿨습니다. 설계는 docs/discipleship-design.md를 기준으로 강의별 퀴즈와 개발자 프리뷰 게이팅까지 이어집니다.",
+          "QT 읽기 → 영성일기(질문형/자유형) → 기도제목 → XP·레벨·업적으로 이어지는 동기 부여 구조",
       },
       {
-        title: "관리자 웹과의 계약",
+        title: "순모임 중심 공유",
+        description: "일기·QT 나눔을 전체 공개가 아닌 소속 순에만 공유, 학기 MVP 순 선정으로 그룹 단위 참여 유도",
+      },
+      {
+        title: "오프라인 사역과 연결",
+        description: "GPS 반경 채플 출석, 캠퍼스별 리더보드, 채플 순서·주보·공지 발행, 수련회 페이지, 실시간 통번역",
+      },
+      {
+        title: "기능 축소 결정",
         description:
-          "채플 요약·통번역 세션은 별도 Next.js 관리자 웹에서 등록하고 앱은 소비합니다. 스키마 마이그레이션과 프로토콜 문서로 계약을 고정해 1인 개발에서도 경계를 명확히 했습니다.",
+          "채팅·커뮤니티·스토리 탭을 사용 데이터 기반으로 비활성화하고 영성 습관 + 순모임 + 채플로 재구성",
       },
     ],
-    retrospective:
-      "사역 현장을 아는 상태로 기획부터 운영까지 혼자 닫아 보니, 기능 추가보다 권한·배포·알림처럼 깨지면 공동체가 멈추는 축을 먼저 단단히 하는 일이 중요하다는 걸 배웠습니다. 앱과 관리자 웹, 통번역 서버의 계약을 문서와 DB 함수로 고정한 뒤에야 안정적으로 기능을 쌓을 수 있었습니다.",
+    challenges: [
+      {
+        title: "인증 세션 레이스",
+        description:
+          "백그라운드 복귀·앱 시작 시 로그아웃/데이터 미조회 문제 → 동기화 버전 카운터로 stale 결과 폐기, 만료 전 세션 유지, 포그라운드 단일 in-flight 동기화로 전면 재설계",
+      },
+      {
+        title: "게임화 무결성",
+        description: "일일 XP 한도를 클라이언트 상수 + DB RPC로 이중 검증, 가입 트리거로 레벨 초기화",
+      },
+      {
+        title: "푸시 신뢰성",
+        description:
+          "클라이언트 발송을 Edge Function으로 이전, 티켓 저장 → 영수증 배치 검증 → 실패 토큰 정리까지 닫힌 루프 구성",
+      },
+      {
+        title: "권한 모델",
+        description: "프로필 열람·일기 공유 범위·발행 권한을 RLS 정책으로 DB 단에서 차단",
+      },
+      {
+        title: "OTA 안전 배포",
+        description: "fingerprint 런타임 정책으로 네이티브 변경 섞인 JS의 OTA 사고 차단, 강제 업데이트 모달",
+      },
+      {
+        title: "구조 리팩토링",
+        description:
+          "초기 빠른 구현 후 책임 분리·전략 패턴·Repository 패턴 적용, 프론트엔드 규칙 문서화로 일관성 유지",
+      },
+    ],
     stack: [
       "React Native",
       "Expo",
@@ -187,8 +169,9 @@ export const projects: Project[] = [
       "Zustand",
       "TanStack Query",
       "NativeWind",
+      "GlueStack UI",
+      "Reanimated",
       "Supabase",
-      "Deno",
       "EAS",
     ],
     site: "https://busanccc.com",

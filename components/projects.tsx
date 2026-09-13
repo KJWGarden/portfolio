@@ -49,7 +49,7 @@ export function Projects() {
                 <div className="flex flex-col justify-between p-7 md:p-9">
                   <div>
                     <p className="text-xs text-muted">
-                      {project.period} · {project.status}
+                      {project.status ? `${project.period} · ${project.status}` : project.period}
                     </p>
                     <h3 className="mt-3 text-2xl font-semibold tracking-tight">{project.title}</h3>
                     <p className="mt-1 text-sm text-accent">{project.subtitle}</p>
@@ -86,7 +86,7 @@ export function Projects() {
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="max-w-2xl">
                       <p className="text-xs text-muted">
-                        {project.period} · {project.status}
+                        {project.status ? `${project.period} · ${project.status}` : project.period}
                       </p>
                       <h3 className="mt-2 text-xl font-semibold">{project.title}</h3>
                       <p className="mt-3 text-sm leading-7 text-muted">{project.summary}</p>

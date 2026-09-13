@@ -27,7 +27,12 @@ export function ProjectExpand({ project }: { project: Project }) {
               </li>
             ))}
           </ul>
-          {project.highlights[0] ? (
+          {project.planningPoints?.[0] ? (
+            <p className="text-sm leading-7 text-foreground/80">
+              <span className="text-accent">{project.planningPoints[0].title} · </span>
+              {project.planningPoints[0].description}
+            </p>
+          ) : project.highlights?.[0] ? (
             <p className="text-sm leading-7 text-foreground/80">
               <span className="text-accent">대표 개선 · </span>
               {project.highlights[0].title}. {project.highlights[0].toBe}
