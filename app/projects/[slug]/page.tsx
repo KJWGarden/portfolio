@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
         <header className="mt-8 max-w-3xl">
           <p className="text-sm text-accent">
-            {project.period} · {project.status}
+            {[project.period, project.status].filter(Boolean).join(" · ")}
           </p>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">{project.title}</h1>
           <p className="mt-3 text-lg text-muted">{project.subtitle}</p>

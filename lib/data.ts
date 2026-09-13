@@ -19,7 +19,7 @@ export type Project = {
   title: string;
   subtitle: string;
   period: string;
-  status: string;
+  status?: string;
   summary: string;
   overview: string;
   roles: string[];
@@ -99,6 +99,11 @@ export const projects: Project[] = [
     ],
     highlights: [
       {
+        title: "실시간 통번역 연동",
+        asIs: "수련회 외국인 참가자는 별도 웹이나 도구로 통번역을 봐야 했고, 커뮤니티 앱과 현장 사역 흐름이 분리되어 있었습니다.",
+        toBe: "국제 컨퍼런스에서 검증한 실시간 통번역 서비스를 CCC 커뮤니티 앱에 연동했습니다. WebSocket으로 전사문·번역문·TTS를 스트리밍해, 앱에서 바로 자막을 볼 수 있게 했습니다.",
+      },
+      {
         title: "OTA 사고 방지 설계",
         asIs: "네이티브 변경이 섞인 JS 번들을 구버전 빌드에 OTA로 내보내면 런타임이 깨질 수 있습니다. 스토어 심사 없이 핫픽스를 보내는 환경일수록 이 위험이 커집니다.",
         toBe: "runtimeVersion을 fingerprint 정책으로 두어 네이티브에 영향을 주는 변경이 생기면 런타임 버전을 자동으로 올립니다. JS만 바뀐 수정은 EAS Update로 배포하고, 네이티브가 바뀌면 새 빌드를 올리도록 사고 경로를 구조적으로 차단했습니다.",
@@ -139,7 +144,7 @@ export const projects: Project[] = [
         items: [
           "GPS 출석 — Haversine 거리, 장소별 반경(기본 150m) 검증, 출석 순간에만 위치 사용",
           "pg_cron이 Edge Function을 5분마다 호출해 채플 시작 1시간 전 자동 푸시",
-          "학기별 MVP 리더보드·보상, 수련회 출석/리더보드",
+          "학기별 MVP 리더보드·보상, 채플 리트릿 출석/리더보드",
         ],
       },
       {
@@ -206,8 +211,7 @@ export const projects: Project[] = [
     slug: "live-caption",
     title: "실시간 AI 통역 서비스",
     subtitle: "국제 컨퍼런스 다국어 자막 플랫폼",
-    period: "2026.05 — 현재",
-    status: "운영 중",
+    period: "2026.05 — 2026.07",
     summary:
       "한국어·일본어·중국어 발표를 실시간으로 번역해 참가자에게 다국어 자막을 제공하는 AI 통역 서비스. 비용을 90% 낮추고 현장 운영 콘솔까지 직접 구축했습니다.",
     overview:
@@ -240,7 +244,7 @@ export const projects: Project[] = [
       },
     ],
     retrospective:
-      "제한된 네트워크 환경과 예기치 못한 변수가 있는 현장에서도 안정적인 서비스를 제공하기 위해 무엇을 미리 고려해야 하는지 직접 경험했습니다. 개발뿐 아니라 운영진과의 빠른 소통이 안정적인 운영의 전제라는 점도 배웠습니다. 현장 피드백을 바탕으로, 전문 지식이 없는 운영자도 도입할 수 있는 범용 실시간 AI 번역 서비스로 고도화할 계획입니다.",
+      "제한된 네트워크 환경과 예기치 못한 변수가 있는 현장에서도 안정적인 서비스를 제공하기 위해 무엇을 미리 고려해야 하는지 직접 경험했습니다. 개발뿐 아니라 운영진과의 빠른 소통이 안정적인 운영의 전제라는 점도 배웠습니다. 현장 피드백을 바탕으로 CCC 커뮤니티 앱에 서비스를 연동해 두었습니다.",
     stack: ["Next.js", "TypeScript", "Deepgram", "GPT", "WebSocket"],
     cover: "/images/live-caption.png",
     icon: "/images/live-caption-icon.png",
